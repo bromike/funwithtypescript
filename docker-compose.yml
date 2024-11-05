@@ -1,0 +1,27 @@
+services:
+#  api-dev:
+#    build:
+#      context: .
+#      target: local
+#    ports:
+#      - "${COMPONENT_PORT}:${COMPONENT_PORT}"
+
+  mysql:
+    image: public.ecr.aws/docker/library/mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
+    restart: always
+    ports:
+      - "3311:3306" # Port definition is for local development on the host.
+    volumes:
+      - ./setup/dbCreation.sql:/docker-entrypoint-initdb.d/A_db_creation.sql
+
+#  redis:
+#    image: public.ecr.aws/docker/library/redis:6.2
+#    ports:
+#      - "6379:6379"
+#    restart: always
+
+#  dependencies:
+#    image: public.ecr.aws/docker/library/busybox:latest
+#    depends_on: [mysql, redis]
